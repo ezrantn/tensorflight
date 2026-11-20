@@ -8,6 +8,14 @@
 
 #define TASK_COMM_LEN 16
 
+enum gpu_dev_type {
+    GPU_DEV_UNKNOWN = 0,    // 
+    GPU_DEV_NVIDIA_CTL = 1, // /dev/nvidiactl
+    GPU_DEV_NVIDIA_UVM = 2, // /dev/nvidia-uvm
+    GPU_DEV_NVIDIA_GPU = 3, // /dev/nvidia0, /dev/nvidia1, etc
+    GPU_DEV_DRI_RENDER = 4, // /dev/dri/renderD*
+};
+
 // Defines the types of events that Tensorflight can observe.
 enum event_kind {
     EVENT_IOCTL_ENTER = 1,
@@ -26,6 +34,8 @@ struct gpu_event {
     __u32 fd;          // File descriptor associated with the syscall.
     __u64 cmd;         // ioctl command identifier.
     __u64 arg;         // ioctl argument.
+    __u8 dev_type;
     char comm[TASK_COMM_LEN]; // Name of the process.
+    __u8 _pad[7];
 };
 #endif

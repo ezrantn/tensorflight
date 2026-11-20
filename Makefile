@@ -21,8 +21,8 @@ all: .output/tensorflight
 .output/tensorflight.skel.h: .output/tensorflight.bpf.o
 	$(BPFTOOL) gen skeleton $< > $@
 
-.output/tensorflight: src/main.c src/tensorflight.h .output/tensorflight.skel.h
-	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
+.output/tensorflight: src/main.c src/collector.c src/collector.h src/tensorflight.h .output/tensorflight.skel.h
+	$(CC) $(CFLAGS) src/main.c src/collector.c -o $@ $(LDFLAGS)
 
 clean:
 	rm -rf .output
