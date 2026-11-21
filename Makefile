@@ -36,4 +36,4 @@ test: $(TEST_BIN)
 test-root: $(TEST_BIN)
 	sudo ./$(TEST_BIN)
 
-.PHONY: all clean
+.PHONY: all clean test test-root
