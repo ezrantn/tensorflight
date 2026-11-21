@@ -1,0 +1,4 @@
+CompileFlags:
+  Add:
+    - -I/home/carolynm/Documents/dev/tensorflight/.output/vmlinux.h
+    - -D__TARGET_ARCH_x86
