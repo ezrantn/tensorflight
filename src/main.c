@@ -56,8 +56,8 @@ int main(int argc, char **argv) {
 
   rb = ring_buffer__new(map_fd, collector_handle_event, &ctx, NULL);
   if (!rb) {
-    fprintf(stderr, "Failed to create ring buffer\n");
-    err = -errno;
+    err = errno ? -errno : -1;
+    fprintf(stderr, "Failed to create ring buffer: %d\n", err);
     goto cleanup;
   }
 
@@ -74,7 +74,15 @@ int main(int argc, char **argv) {
       fprintf(stderr, "Error polling ring buffer: %d\n", err);
       break;
     }
+    err = 0;
   }
+
+  if (rb && err == 0) {
+    (void)ring_buffer__consume(rb);
+  }
+
+  fprintf(stderr, "\nTensorflight stopped — total events processed: %zu\n",
+          ctx.event_count);
 
 cleanup:
   ring_buffer__free(rb);

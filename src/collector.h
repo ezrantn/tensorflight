@@ -29,6 +29,7 @@ struct ioctl_event {
   char dev[32];
 };
 
+const char *tf_ioctl_cmd_name(__u8 dev_type, uint8_t nr);
 int collector_handle_event(void *ctx, void *data, size_t data_sz);
 
 #endif
